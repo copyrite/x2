@@ -17,19 +17,23 @@ if __name__ == "__main__":
     for kind, manager in x2.managers.items():
 
         with open(Path(f"_wotc/x2{kind}templatemanager.html"), "w") as file:
-            layout_kind = (
+            manager_layout_kind = (
                 kind
                 if Path(f"_layouts/x2{kind}templatemanager.html").exists()
                 else "data"
             )
             file.write(
-                f"---\ntitle: {kind}\nlayout: x2{layout_kind}templatemanager\nflavor: wotc\npermalink: wotc/{kind}\n---\n"
+                f"---\ntitle: {kind}\nlayout: x2{manager_layout_kind}templatemanager\nflavor: wotc\npermalink: wotc/{kind}\n---\n"
             )
+
+        template_layout_kind = (
+            kind if Path(f"_layouts/x2{kind}template.html").exists() else "data"
+        )
 
         for template in manager:
             with open(
                 Path(f"_wotc/") / f"{template}_x2{kind}template.html", "w"
             ) as file:
                 file.write(
-                    f"---\ntitle: {template}\nlayout: x2datatemplate\ntemplate_type: {kind}\npermalink: wotc/{kind}/{template}\nflavor: wotc\n---\n"
+                    f"---\ntitle: {template}\nlayout: x2{template_layout_kind}template\ntemplate_type: {kind}\npermalink: wotc/{kind}/{template}\nflavor: wotc\n---\n"
                 )

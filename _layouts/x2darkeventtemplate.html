@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+{%- include head.html -%}
+
+<body>
+  {%- include header.html -%}
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <h1>{{ site.data[page.flavor].darkevent[page.title].DisplayName }}</h1>
+      <p>{{ site.data[page.flavor][page.template_type][page.title].SummaryText }}</p>
+      <p>
+        <span>{{ site.data[page.flavor][page.template_type][page.title].QuoteText }}</span>
+        <span style="display: block; text-align: right">{{ site.data[page.flavor][page.template_type][page.title].QuoteTextAuthor }}</span>
+      </p>
+      <p>Pre-mission text: {{ site.data[page.flavor][page.template_type][page.title].PreMissionText }}</p>
+      <p>Mission success text: {{ site.data[page.flavor][page.template_type][page.title].PostMissionSuccessText }}</p>
+      <p>Mission failure text: {{ site.data[page.flavor][page.template_type][page.title].PostMissionFailureText }}</p>
+      {{ content }}
+    </div>
+  </main>
+  {%- include footer.html -%}
+</body>
+
+</html>
