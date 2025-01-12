@@ -7,15 +7,15 @@
   {%- include header.html -%}
   <main class="page-content" aria-label="Content">
     <div class="wrapper">
-      <h1>{{ site.data[page.flavor].darkevent[page.title].DisplayName }}</h1>
-      <p>{{ site.data[page.flavor][page.template_type][page.title].SummaryText }}</p>
+      <h1>{{ template.DisplayName }}</h1>
+      <p>{{ template.SummaryText }}</p>
       <p>
-        <span>{{ site.data[page.flavor][page.template_type][page.title].QuoteText }}</span>
-        <span style="display: block; text-align: right">{{ site.data[page.flavor][page.template_type][page.title].QuoteTextAuthor }}</span>
+        <span>{{ template.QuoteText }}</span>
+        <span style="display: block; text-align: right">{{ template.QuoteTextAuthor }}</span>
       </p>
-      <p>Pre-mission text: {{ site.data[page.flavor][page.template_type][page.title].PreMissionText }}</p>
-      <p>Mission success text: {{ site.data[page.flavor][page.template_type][page.title].PostMissionSuccessText }}</p>
-      <p>Mission failure text: {{ site.data[page.flavor][page.template_type][page.title].PostMissionFailureText }}</p>
+      <p>Pre-mission text: {{ template.PreMissionText }}</p>
+      <p>Mission success text: {{ template.PostMissionSuccessText }}</p>
+      <p>Mission failure text: {{ template.PostMissionFailureText }}</p>
       {{ content }}
     </div>
   </main>

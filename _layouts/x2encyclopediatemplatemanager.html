@@ -10,10 +10,10 @@
       <h1>XCOM Archives</h1>
       {{ content }}
       <ul>
-      {% for outer in site.data[page.flavor].encyclopedia %}
+      {% for outer in manager %}
         {% if outer[1].bCategoryHeader == "true" %}
         <h2><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ outer[0] }}">{{ outer[1].ListTitle }}</a></h2>
-        {% for inner in site.data[page.flavor].encyclopedia %}
+        {% for inner in manager %}
           {% if inner[1].bCategoryHeader == "false" and inner[1].ListCategory == outer[1].ListCategory %}
           <h3><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ inner[0] }}">{{ inner[1].DescriptionTitle }}</a></h3>
           <p>{{ inner[1].DescriptionEntry }}</p>

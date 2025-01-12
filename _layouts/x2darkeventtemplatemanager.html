@@ -10,13 +10,13 @@
       <h1>Dark Events</h1>
       {{ content }}
       <table>
-      {% for outer in site.data[page.flavor].darkevent %}
+      {% for temp in manager %}
         <tr>
           <td>
-          <a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ outer[0] }}">{{ outer[1].DisplayName }}</a>
+          <a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ outer[0] }}">{{ temp[1].DisplayName }}</a>
           </td>
           <td>
-            {{ outer[1].PreMissionText }}
+            {{ temp[1].PreMissionText }}
           </td>
         </tr>
       {% endfor %}

@@ -23,7 +23,7 @@ if __name__ == "__main__":
                 else "data"
             )
             file.write(
-                f"---\ntitle: {kind}\nlayout: x2{manager_layout_kind}templatemanager\nflavor: wotc\npermalink: wotc/{kind}\n---\n"
+                f"---\ntitle: {kind}\nlayout: x2{manager_layout_kind}templatemanager\ntemplate_type: {kind}\nflavor: wotc\npermalink: wotc/{kind}\n---\n"
             )
 
         template_layout_kind = (
