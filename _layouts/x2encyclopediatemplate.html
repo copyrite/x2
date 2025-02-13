@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+{%- include head.html -%}
+
+<body>
+  {%- include header.html -%}
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <h1>XCOM Archives</h1>
+      <ul>
+      {% for outer in manager %}
+        {% if outer[1].bCategoryHeader == true %}
+        <li><h2><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ outer[0] }}">{{ outer[1].ListTitle }}</a></h2>
+          <ul>
+          {% for inner in manager %}
+            {% if inner[1].bCategoryHeader == false and inner[1].ListCategory == outer[1].ListCategory %}
+            <li><h3><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ inner[0] }}">{{ inner[1].DescriptionTitle }}</a></h3>
+            <p>{{ inner[1].DescriptionEntry }}</p></li>
+            {% endif %}
+          {% endfor %}
+          </ul>
+        </li>
+        {% endif %}
+      {% endfor %}
+      </ul>
+    </div>
+  </main>
+  {%- include footer.html -%}
+</body>
+
+</html>
