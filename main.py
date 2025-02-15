@@ -1,9 +1,17 @@
+import argparse
 import os
+import re
+from contextlib import suppress
 from pathlib import Path
 
 import x2py
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--templates", nargs="+", required=False)
+
+    args = parser.parse_args()
+
     x2 = x2py.X2(os.getenv("XCOM2CONTENTPATH"), os.getenv("XCOM2CONTENTPATH"))
     Path("_data").mkdir(exist_ok=True)
     with open("_data/wotc.json", "w") as file:
@@ -15,6 +23,16 @@ if __name__ == "__main__":
 
     Path("_wotc").mkdir(exist_ok=True)
     for kind, manager in x2.managers.items():
+        # Dev option: only generate selected types of templates
+        if args.templates:
+            for arg in args.templates:
+                if arg.casefold() == kind.casefold():
+                    break
+                with suppress(TypeError):
+                    if re.match(rf"x2{arg}template", kind, re.IGNORECASE):
+                        break
+            else:
+                continue
 
         with open(Path(f"_wotc/{kind}.html"), "w") as file:
             manager_layout_kind = (
