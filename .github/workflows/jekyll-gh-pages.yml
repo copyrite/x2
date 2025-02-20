@@ -37,6 +37,8 @@ jobs:
           repository: copyrite/x2content
           path: x2content
           token: ${{ secrets.PAT }}
+      - run: |
+          cp -r x2content/Content content
       - name: Checkout x2py
         uses: actions/checkout@main
         with:
