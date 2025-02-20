@@ -1,4 +1,6 @@
 import argparse
+import glob
+import json
 import os
 import re
 from contextlib import suppress
@@ -6,16 +8,25 @@ from pathlib import Path
 
 import x2py
 
+CONTENT = Path(os.getenv("XCOM2CONTENTPATH"))
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--templates", nargs="+", required=False)
 
     args = parser.parse_args()
 
-    x2 = x2py.X2(os.getenv("XCOM2CONTENTPATH"), os.getenv("XCOM2CONTENTPATH"))
+    x2 = x2py.X2(CONTENT, CONTENT)
     Path("_data").mkdir(exist_ok=True)
     with open("_data/wotc.json", "w") as file:
         x2.dump(file, html=True)
+
+    img = {}
+    for fname in glob.glob("content/**", recursive=True):
+        if Path(fname).is_file():
+            img[fname.casefold().replace("\\", "/")] = fname.replace("\\", "/")
+    with open("_data/img.json", "w") as file:
+        json.dump(img, file)
 
     Path("_wotc").mkdir(exist_ok=True)
     with open(Path(f"_wotc/index.html"), "w") as file:
