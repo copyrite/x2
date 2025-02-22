@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+{%- include head.html -%}
+
+<body>
+  {%- include header.html -%}
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <h1>{{ template.DisplayName }}</h1>
+      <p>{{ template.SummaryText }}</p>
+      <p>
+        <span>{{ template.QuoteText }}</span>
+        <span style="display: block; text-align: right">{{ template.QuoteTextAuthor }}</span>
+      </p>
+      <p>Pre-mission text: {{ template.PreMissionText }}</p>
+      <p>Mission success text: {{ template.PostMissionSuccessText }}</p>
+      <p>Mission failure text: {{ template.PostMissionFailureText }}</p>
+      {{ content }}
+    </div>
+  </main>
+  {%- include footer.html -%}
+</body>
+
+</html>

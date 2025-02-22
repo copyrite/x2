@@ -7,16 +7,20 @@
   {%- include header.html -%}
   <main class="page-content" aria-label="Content">
     <div class="wrapper">
-      <h1>{{ template.DisplayName }}</h1>
-      <p>{{ template.SummaryText }}</p>
-      <p>
-        <span>{{ template.QuoteText }}</span>
-        <span style="display: block; text-align: right">{{ template.QuoteTextAuthor }}</span>
-      </p>
-      <p>Pre-mission text: {{ template.PreMissionText }}</p>
-      <p>Mission success text: {{ template.PostMissionSuccessText }}</p>
-      <p>Mission failure text: {{ template.PostMissionFailureText }}</p>
+      <h1>Dark Events</h1>
       {{ content }}
+      <table>
+        {% for temp in manager %}
+          <tr>
+            <td>
+              <a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ temp[0] }}">{{ temp[1].DisplayName }}</a>
+            </td>
+            <td>
+              {{ temp[1].PreMissionText }}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
     </div>
   </main>
   {%- include footer.html -%}
