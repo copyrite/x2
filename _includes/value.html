@@ -1,0 +1,7 @@
+{% assign maybe_image = include.value | replace: "img:///", "" | replace: ".", "/" | prepend: "/content/" | append: ".png" %}
+{% assign maybe_file = site.static_files | where: "path", maybe_image | first %}
+{% if maybe_file.path %}
+  <img src="{{ maybe_file.path | prepend: site.baseurl }}">
+{% else %}
+  {{ include.value }}
+{% endif %}

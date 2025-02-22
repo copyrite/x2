@@ -16,11 +16,12 @@
             {% if outer[1][0] %}
               <ul>
                 {% for inner in outer[1] %}
-                  <li>{{ inner }}</li>
+                  <li>{% include value.html value=inner %}</li>
                 {% endfor %}
               </ul>
             {% else %}
-              {{ outer[1] }}
+              {% assign val=outer[1] %}
+              {% include value.html value=val %}
             {% endif %}
           </li>
         {% endfor %}
