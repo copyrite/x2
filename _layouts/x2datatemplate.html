@@ -11,7 +11,8 @@
       {{ content }}
       <ul>
       {% for item in site.data[page.flavor][page.template_type] %}
-        <li><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ item[0] }}">{{ item[0] }}</a></li>
+        {% assign template=item[1] %}
+        <li><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ item[0] }}">{%- include label_x2datatemplate.html template=template -%}</a></li>
       {% endfor %}
       </ul>
     </div>
