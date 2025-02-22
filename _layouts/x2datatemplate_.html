@@ -10,8 +10,19 @@
       <h1>{{ page.title }}</h1>
       {{ content }}
       <ul>
-        {% for item in site.data[page.flavor][page.template_type][page.title] %}
-          <li>{{ item[0] }}: {{ item[1] }}</li>
+        {% for outer in template %}
+          <li>
+            {{ outer[0] }}:
+            {% if outer[1][0] %}
+              <ul>
+                {% for inner in outer[1] %}
+                  <li>{{ inner }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              {{ outer[1] }}
+            {% endif %}
+          </li>
         {% endfor %}
       </ul>
     </div>
