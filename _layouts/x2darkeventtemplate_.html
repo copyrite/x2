@@ -17,6 +17,7 @@
       <p>Mission success text: {{ template.PostMissionSuccessText }}</p>
       <p>Mission failure text: {{ template.PostMissionFailureText }}</p>
       {{ content }}
+      {% include raw.html template=template %}
     </div>
   </main>
   {%- include footer.html -%}
