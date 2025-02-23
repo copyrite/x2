@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
-
-{%- include head.html -%}
-
-<body>
-  {%- include header.html -%}
-  <main class="page-content" aria-label="Content">
-    <div class="wrapper">
-      <h1>Soldier Classes</h1>
-      {{ content }}
-      <ul>
-      {% for item in site.data[page.flavor].x2soldierclasstemplate %}
-        {% assign template=item[1] %}
-        <li><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ item[0] }}">{%- include label_x2soldierclasstemplate.html template=template -%}</a></li>
-      {% endfor %}
-      </ul>
-    </div>
-  </main>
-  {%- include footer.html -%}
-</body>
-
-</html>
+---
+layout: default
+---
+{{ content }}
+<ul>
+  {% for item in site.data[page.flavor].x2soldierclasstemplate %}
+    {% assign template=item[1] %}
+    <li><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ item[0] }}">{%- include label_x2soldierclasstemplate.html template=template -%}</a></li>
+  {% endfor %}
+</ul>

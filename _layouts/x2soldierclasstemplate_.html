@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
-
-{%- include head.html -%}
-
-<body>
-  {%- include header.html -%}
-  <main class="page-content" aria-label="Content">
-    <div class="wrapper">
-      <h1>{% include label_x2soldierclasstemplate.html template=template %}</h1>
-      <p>{{ template.ClassSummary }}</p>
-      {{ content }}
-      {% include raw.html template=template %}
-    </div>
-  </main>
-  {%- include footer.html -%}
-</body>
-
-</html>
+---
+layout: x2datatemplate_
+---
+{% assign template = site.data[page.flavor].x2soldierclasstemplate[page.title] %}
+<div style="align-content: center">{% include value.html value=template.IconImage %}</div>
+<p>{{ template.ClassSummary }}</p>
+{{ content }}
