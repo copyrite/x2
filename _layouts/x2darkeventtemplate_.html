@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
-
-{%- include head.html -%}
-
-<body>
-  {%- include header.html -%}
-  <main class="page-content" aria-label="Content">
-    <div class="wrapper">
-      <h1>{{ template.DisplayName }}</h1>
-      <p>{{ template.SummaryText }}</p>
-      <p>
-        <span>{{ template.QuoteText }}</span>
-        <span style="display: block; text-align: right">{{ template.QuoteTextAuthor }}</span>
-      </p>
-      <p>Pre-mission text: {{ template.PreMissionText }}</p>
-      <p>Mission success text: {{ template.PostMissionSuccessText }}</p>
-      <p>Mission failure text: {{ template.PostMissionFailureText }}</p>
-      {{ content }}
-      {% include raw.html template=template %}
-    </div>
-  </main>
-  {%- include footer.html -%}
-</body>
-
-</html>
+---
+layout: x2datatemplate_
+---
+{% assign template = site.data[page.flavor].x2darkeventtemplate[page.title] %}
+<p>{{ template.SummaryText }}</p>
+<p>
+  <span>{{ template.QuoteText }}</span>
+  <span style="display: block; text-align: right">{{ template.QuoteTextAuthor }}</span>
+</p>
+<p>Pre-mission text: {{ template.PreMissionText }}</p>
+<p>Mission success text: {{ template.PostMissionSuccessText }}</p>
+<p>Mission failure text: {{ template.PostMissionFailureText }}</p>
+{{ content }}

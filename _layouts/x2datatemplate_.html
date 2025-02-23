@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
-
-{%- include head.html -%}
-
-<body>
-  {%- include header.html -%}
-  <main class="page-content" aria-label="Content">
-    <div class="wrapper">
-      <h1>{%- include label_x2datatemplate.html template=template -%}</h1>
-      {{ content }}
-      {% include raw.html %}
-    </div>
-  </main>
-  {%- include footer.html -%}
-</body>
-
-</html>
+---
+layout: default
+---
+{% assign manager = site.data[page.flavor][page.template_type] %}
+{% assign template = manager[page.title] %}
+{{ content }}
+{% if page.layout == "x2datatemplate_" %}
+  {% include raw.html template=template %}
+{% else %}
+  <details>
+    <summary>Raw view</summary>
+    {% include raw.html template=template %}
+  </details>
+{% endif %}
