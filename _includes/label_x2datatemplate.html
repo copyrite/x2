@@ -1,7 +1,0 @@
-{% if include.template.DisplayName and include.template.DisplayName.size > 0 %}
-  {{ include.template.DisplayName }}
-{% elsif include.template.FriendlyName and include.template.FriendlyName.size > 0 %}
-  {{ include.template.FriendlyName }}
-{% else %}
-  {{ include.template.DataName }}
-{% endif %}

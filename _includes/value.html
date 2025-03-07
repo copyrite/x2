@@ -1,7 +1,13 @@
-{% assign maybe_image = include.value | replace: "img:///", "" | replace: ".", "/" | prepend: "content/" | append: ".png" | downcase %}
-{% assign maybe_file = site.data.img[maybe_image] %}
-{% if maybe_file %}
-  <img src="{{ maybe_file | prepend: "/" | prepend: site.baseurl }}" title="{{ include.value }}">
-{% else %}
-  {{ include.value }}
-{% endif %}
+{%- assign maybe_image = include.value | replace: "img:///", "" | replace: ".", "/" | prepend: "content/" | append: ".png" | downcase -%}
+{%- assign maybe_file = site.data.img[maybe_image] -%}
+{%- if include.imgClass -%}
+  {%- if maybe_file -%}
+    <img src="{{ site.baseurl }}/{{ maybe_file }}" class="{{ include.imgClass }}" imgTitle="{{ include.imgTItle }}">
+  {%- endif -%}
+{%- else -%}
+  {%- if maybe_file -%}
+    <img src="{{ site.baseurl }}/{{ maybe_file }}" imgTitle="{{ include.imgTItle }}">
+  {%- else -%}
+    {{- include.value -}}
+  {%- endif -%}
+{%- endif -%}

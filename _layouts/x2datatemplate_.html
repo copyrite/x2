@@ -1,8 +1,8 @@
 ---
 layout: default
 ---
-{% assign manager = site.data[page.flavor][page.template_type] %}
-{% assign template = manager[page.title] %}
+{% assign manager = site.data[page.flavor][page.UClass] %}
+{% assign template = manager[page.DataName] %}
 {{ content }}
 {% if page.layout == "x2datatemplate_" %}
   {% include raw.html template=template %}

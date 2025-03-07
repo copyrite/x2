@@ -5,6 +5,6 @@ layout: default
 <ul>
   {% for item in site.data[page.flavor].x2soldierclasstemplate %}
     {% assign template=item[1] %}
-    <li><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ item[0] }}">{%- include label_x2soldierclasstemplate.html template=template -%}</a></li>
+    <li>{%- include link.html template=template -%}</li>
   {% endfor %}
 </ul>

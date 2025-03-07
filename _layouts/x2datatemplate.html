@@ -3,8 +3,8 @@ layout: default
 ---
 {{ content }}
 <ul>
-  {% for item in site.data[page.flavor][page.template_type] %}
+  {% for item in site.data[page.flavor][page.UClass] %}
     {% assign template=item[1] %}
-    <li><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ page.title }}/{{ item[0] }}">{%- include label_x2datatemplate.html template=template -%}</a></li>
+    <li>{%- include link.html template=template -%}</li>
   {% endfor %}
 </ul>

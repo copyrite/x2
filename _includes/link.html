@@ -1,0 +1,16 @@
+{% assign uclass = include.uclass %}
+{% if uclass == nil %}
+  {% assign uclass = page.UClass %}
+{% endif %}
+{% capture permalink %}{{ page.flavor }}/{{ uclass }}/{{ template.DataName }}{% endcapture %}
+{% assign target = site[page.flavor] | where: "permalink", permalink | first %}
+
+<span>
+  <a href="{{ site.baseurl }}/{{ permalink }}">
+    {%- if uclass == "x2soldierclasstemplate" -%}
+      {%- capture imgClass %}link icon {{ uclass }}{% endcapture -%}
+      {%- include value.html value=template.IconImage imgClass=imgClass imgTitle=target.title -%}
+    {%- endif -%}
+    {{- target.title -}}
+  </a>
+</span>
