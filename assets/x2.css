@@ -1,4 +1,22 @@
-img.link.icon.x2soldierclasstemplate {
+img.link.icon {
     height: 1.5em;
+}
+
+img.link.icon.x2soldierclasstemplate {
     margin: -0.35em 0 -0.15em 0;
+}
+
+span.link.icon {
+    display: inline-block;
+    position: relative;
+    width: 1.5em;
+    height: 1em;
+}
+
+img.link.icon.x2adventchosentemplate {
+    position: absolute;
+}
+
+img.link.icon.x2resistancefactiontemplate {
+    position: absolute;
 }
