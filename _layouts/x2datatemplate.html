@@ -5,6 +5,6 @@ layout: default
 <ul>
   {% for item in site.data[page.flavor][page.UClass] %}
     {% assign template=item[1] %}
-    <li>{%- include link.html template=template -%}</li>
+    <li>{%- include friendly_link.html template=template -%}</li>
   {% endfor %}
 </ul>

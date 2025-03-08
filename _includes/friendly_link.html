@@ -1,0 +1,37 @@
+{% assign uclass = include.uclass %}
+{% if uclass == nil %}
+  {% assign uclass = page.UClass %}
+{% endif %}
+{%- capture permalink -%}{%- include permalink.html uclass=uclass dataname=template.DataName -%}{%- endcapture -%}
+{% assign target = site[page.flavor] | where: "permalink", permalink | first %}
+{%- capture imgClass -%} link icon {{ uclass }}{%- endcapture -%}
+
+<span>
+  <a href="{%- include url.html uclass=uclass dataname=template.DataName -%}">
+    {%- if uclass == "x2soldierclasstemplate" -%}
+      {%- capture layer0 -%}{{ include.template.IconImage }}{%- endcapture -%}
+    {%- elsif uclass == "x2adventchosentemplate" -%}
+      {%- capture layer0 -%}{{ include.template.ChosenIconInformation_Layer0[0] }}{%- endcapture -%}
+      {%- capture layer1 -%}{{ include.template.ChosenIconInformation_Layer1[0] }}{%- endcapture -%}
+      {%- capture layer2 -%}{{ include.template.ChosenIconInformation_Layer2[0] }}{%- endcapture -%}
+    {%- elsif uclass == "x2resistancefactiontemplate" -%}
+      {%- capture layer0 -%}{{ include.template.FactionIconInformation_Layer0[0] }}{%- endcapture -%}
+      {%- capture layer1 -%}{{ include.template.FactionIconInformation_Layer1[0] }}{%- endcapture -%}
+      {%- capture layer2 -%}{{ include.template.FactionIconInformation_Layer2[0] }}{%- endcapture -%}
+    {%- elsif uclass == "x2traittemplate" -%}
+      {%- capture layer0 -%}{{ include.template.IconImage }}{%- endcapture -%}
+    {%- endif -%}
+    {%- if layer0 -%}
+      <span class="{{ imgClass }}">
+        {%- include value.html value=layer0 imgClass=imgClass imgTitle=target.title -%}
+        {%- if layer1 -%}
+          {%- include value.html value=layer1 imgClass=imgClass imgTitle=target.title -%}
+        {%- endif -%}
+        {%- if layer2 -%}
+          {%- include value.html value=layer2 imgClass=imgClass imgTitle=target.title -%}
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+    {{- target.title -}}
+  </a>
+</span>

@@ -3,10 +3,11 @@ layout: default
 ---
 {{ content }}
 <table>
-  {% for temp in site.data[page.flavor].x2darkeventtemplate %}
+  {% for temp in site.data[page.flavor][page.UClass] %}
     <tr>
       <td>
-        <a href="{{ site.baseurl }}/{{ page.flavor }}/x2darkeventtemplate/{{ temp[0] }}">{{ temp[1].DisplayName }}</a>
+        {%- assign dataname = temp[0] -%}
+        <a href="{%- include url.html uclass=page.UClass dataname=dataname -%}">{{ temp[1].DisplayName }}</a>
       </td>
       <td>
         {{ temp[1].PreMissionText }}

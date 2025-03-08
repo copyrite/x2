@@ -3,6 +3,7 @@ layout: default
 ---
 <ul>
   {% for item in site.data[page.flavor] %}
-    <li><a href="{{ site.baseurl }}/{{ page.flavor }}/{{ item[0] }}">{{ item[0] }}</a></li>
+    {%- assign uclass = item[0] -%}
+    <li><a href="{%- include url.html uclass=uclass -%}">{{ uclass }}</a></li>
   {% endfor %}
 </ul>

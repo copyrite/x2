@@ -1,0 +1,11 @@
+{%- assign flavor = page.flavor -%}
+{%- if include.flavor -%}
+  {%- assign flavor = include.flavor -%}
+{%- endif -%}
+/{{- flavor -}}
+{%- if include.uclass -%}
+  /{{- include.uclass -}}
+  {%- if include.dataname -%}
+    /{{- include.dataname -}}
+  {%- endif -%}
+{%- endif -%}

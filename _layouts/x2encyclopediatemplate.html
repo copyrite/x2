@@ -5,12 +5,14 @@ layout: default
 <ul>
   {% for outer in manager %}
     {% if outer[1].bCategoryHeader == true %}
-    <li><h2><a href="{{ site.baseurl }}/{{ page.flavor }}/x2encyclopediatemplate/{{ outer[0] }}">{{ outer[1].ListTitle }}</a></h2>
+    {%- assign dataname = outer[0] -%}
+    <li><h2><a href="{%- include url.html uclass=page.UClass dataname=dataname -%}">{{ outer[1].ListTitle }}</a></h2>
       <ul>
       {% for inner in manager %}
         {% if inner[1].bCategoryHeader == false and inner[1].ListCategory == outer[1].ListCategory %}
-        <li><h3><a href="{{ site.baseurl }}/{{ page.flavor }}/x2encyclopediatemplate/{{ inner[0] }}">{{ inner[1].DescriptionTitle }}</a></h3>
-        <p>{{ inner[1].DescriptionEntry }}</p></li>
+          {%- assign dataname = inner[0] -%}
+          <li><h3><a href="{%- include url.html uclass=page.UClass dataname=dataname -%}">{{ inner[1].DescriptionTitle }}</a></h3>
+          <p>{{ inner[1].DescriptionEntry }}</p></li>
         {% endif %}
       {% endfor %}
       </ul>

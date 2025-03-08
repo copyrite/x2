@@ -1,0 +1,5 @@
+{%- assign flavor = page.flavor -%}
+{%- if include.flavor -%}
+  {%- assign flavor = include.flavor -%}
+{%- endif -%}
+{{- site.baseurl -}}{%- include permalink.html flavor=flavor uclass=include.uclass dataname=include.dataname -%}

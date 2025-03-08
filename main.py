@@ -116,7 +116,7 @@ if __name__ == "__main__":
                     flavor: wotc
                     UClass: {uclass}
                     layout: {layout}
-                    permalink: wotc/{uclass}
+                    permalink: /wotc/{uclass}
                     ---
                     """
                 )
@@ -139,7 +139,7 @@ if __name__ == "__main__":
                         UClass: {uclass}
                         DataName: {data_name}
                         layout: {layout}
-                        permalink: wotc/{uclass}/{data_name}
+                        permalink: /wotc/{uclass}/{data_name}
                         ---
                         """
                     )
