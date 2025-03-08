@@ -5,13 +5,13 @@ layout: default
 <ul>
   {% for outer in manager %}
     {% if outer[1].bCategoryHeader == true %}
-    {%- assign dataname = outer[0] -%}
-    <li><h2><a href="{%- include url.html uclass=page.UClass dataname=dataname -%}">{{ outer[1].ListTitle }}</a></h2>
+    {%- assign template = outer[1] -%}
+    <li><h2>{%- include friendly_link.html uclass=page.UClass template=template -%}</h2>
       <ul>
       {% for inner in manager %}
         {% if inner[1].bCategoryHeader == false and inner[1].ListCategory == outer[1].ListCategory %}
-          {%- assign dataname = inner[0] -%}
-          <li><h3><a href="{%- include url.html uclass=page.UClass dataname=dataname -%}">{{ inner[1].DescriptionTitle }}</a></h3>
+          {%- assign template = inner[1] -%}
+          <li><h3>{%- include friendly_link.html uclass=page.UClass template=template -%}</h3>
           <p>{{ inner[1].DescriptionEntry }}</p></li>
         {% endif %}
       {% endfor %}

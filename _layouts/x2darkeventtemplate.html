@@ -3,14 +3,14 @@ layout: default
 ---
 {{ content }}
 <table>
-  {% for temp in site.data[page.flavor][page.UClass] %}
+  {% for item in site.data[page.flavor][page.UClass] %}
+    {%- assign template = item[1] -%}
     <tr>
       <td>
-        {%- assign dataname = temp[0] -%}
-        <a href="{%- include url.html uclass=page.UClass dataname=dataname -%}">{{ temp[1].DisplayName }}</a>
+        {%- include friendly_link.html uclass=page.UClass template=template -%}
       </td>
       <td>
-        {{ temp[1].PreMissionText }}
+        {{ template.PreMissionText }}
       </td>
     </tr>
   {% endfor %}
