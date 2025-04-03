@@ -27,6 +27,64 @@ def guess_soldier_class_title(template):
     return f"{template.DisplayName or template.DataName}{' (Multiplayer)' if template.bMultiplayerOnly else ''}"
 
 
+def recurse_classes(args, x2, uclass):
+    classname = uclass.__name__.casefold()
+
+    for child in uclass.__subclasses__():
+        recurse_classes(args, x2, child)
+
+    if args.templates:
+        for arg in args.templates:
+            if arg.casefold() == classname:
+                break
+            with suppress(TypeError):
+                if re.match(rf"x2{arg}template", classname, re.IGNORECASE):
+                    break
+        else:
+            return
+
+    layout = (
+        classname if Path(f"_layouts/{classname}.html").exists() else "x2datatemplate"
+    )
+    with open(Path(f"_wotc/{classname}.html"), "w") as file:
+        file.write(
+            dedent(
+                f"""\
+                ---
+                title: {classname}
+                flavor: wotc
+                UClass: {classname}
+                layout: {layout}
+                permalink: /wotc/{classname}
+                ---
+                """
+            )
+        )
+
+    layout = (
+        f"{classname}_"
+        if Path(f"_layouts/{classname}_.html").exists()
+        else "x2datatemplate_"
+    )
+
+    for dataname, template in uclass.instances.items():
+        with open(Path(f"_wotc/") / f"{classname}_{dataname}.html", "w") as file:
+            file.write(
+                dedent(
+                    f"""\
+                    ---
+                    title: \"{template.guess_title() or dataname}\"
+                    flavor: wotc
+                    UClass: {classname}
+                    DataName: {dataname}
+                    layout: {layout}
+                    permalink: /wotc/{classname}/{dataname}
+                    ---
+                    """
+                )
+            )
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--templates", nargs="+", required=False)
@@ -58,7 +116,7 @@ if __name__ == "__main__":
     x2.X2MPCharacterTemplate.guess_title = lambda template: template.DisplayName + " (Multiplayer)"
     x2.X2PointOfInterestTemplate.guess_title = lambda template: ", ".join(
         [
-            x2.managers["x2rewardtemplate"][reward.casefold()].guess_title()
+            x2.X2RewardTemplate.instances[reward.casefold()].guess_title()
             for reward in template.RewardTypes
         ]
     )
@@ -92,55 +150,5 @@ if __name__ == "__main__":
         )
 
     Path("_wotc").mkdir(exist_ok=True)
-    for uclass, manager in x2.managers.items():
-        # Dev option: only generate selected types of templates
-        if args.templates:
-            for arg in args.templates:
-                if arg.casefold() == uclass.casefold():
-                    break
-                with suppress(TypeError):
-                    if re.match(rf"x2{arg}template", uclass, re.IGNORECASE):
-                        break
-            else:
-                continue
 
-        layout = (
-            uclass if Path(f"_layouts/{uclass}.html").exists() else "x2datatemplate"
-        )
-        with open(Path(f"_wotc/{uclass}.html"), "w") as file:
-            file.write(
-                dedent(
-                    f"""\
-                    ---
-                    title: {uclass}
-                    flavor: wotc
-                    UClass: {uclass}
-                    layout: {layout}
-                    permalink: /wotc/{uclass}
-                    ---
-                    """
-                )
-            )
-
-        layout = (
-            f"{uclass}_"
-            if Path(f"_layouts/{uclass}_.html").exists()
-            else "x2datatemplate_"
-        )
-
-        for data_name, template in manager.items():
-            with open(Path(f"_wotc/") / f"{uclass}_{data_name}.html", "w") as file:
-                file.write(
-                    dedent(
-                        f"""\
-                        ---
-                        title: \"{template.guess_title() or template.DataName}\"
-                        flavor: wotc
-                        UClass: {uclass}
-                        DataName: {data_name}
-                        layout: {layout}
-                        permalink: /wotc/{uclass}/{data_name}
-                        ---
-                        """
-                    )
-                )
+    recurse_classes(args, x2, x2.X2DataTemplate)
