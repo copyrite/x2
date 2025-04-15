@@ -2,16 +2,17 @@
 layout: default
 ---
 {% assign manager = site.data[page.flavor].x2encyclopediatemplate %}
+{% assign uclass = page.UClass[0] %}
 <ul>
   {% for outer in manager %}
     {% if outer[1].bCategoryHeader == true %}
     {%- assign template = outer[1] -%}
-    <li><h2>{%- include friendly_link.html uclass=page.UClass template=template -%}</h2>
+    <li><h2>{%- include friendly_link.html uclass=uclass template=template -%}</h2>
       <ul>
       {% for inner in manager %}
         {% if inner[1].bCategoryHeader == false and inner[1].ListCategory == outer[1].ListCategory %}
           {%- assign template = inner[1] -%}
-          <li><h3>{%- include friendly_link.html uclass=page.UClass template=template -%}</h3>
+          <li><h3>{%- include friendly_link.html uclass=uclass template=template -%}</h3>
           <p>{{ inner[1].DescriptionEntry }}</p></li>
         {% endif %}
       {% endfor %}

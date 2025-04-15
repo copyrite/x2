@@ -3,7 +3,8 @@ layout: default
 ---
 {{ content }}
 <ul>
-  {% for item in site.data[page.flavor][page.UClass] %}
+  {% assign uclass = page.UClass[0] %}
+  {% for item in site.data[page.flavor][uclass] %}
     {% assign template=item[1] %}
     <li>{%- include friendly_link.html template=template -%}</li>
   {% endfor %}

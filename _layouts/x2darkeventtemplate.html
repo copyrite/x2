@@ -3,11 +3,11 @@ layout: default
 ---
 {{ content }}
 <table>
-  {% for item in site.data[page.flavor][page.UClass] %}
+  {% for item in site.data[page.flavor].x2darkeventtemplate %}
     {%- assign template = item[1] -%}
     <tr>
       <td>
-        {%- include friendly_link.html uclass=page.UClass template=template -%}
+        {%- include friendly_link.html uclass=x2darkeventtemplate template=template -%}
       </td>
       <td>
         {{ template.PreMissionText }}

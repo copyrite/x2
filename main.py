@@ -43,9 +43,18 @@ def recurse_classes(args, x2, uclass):
         else:
             return
 
-    layout = (
-        classname if Path(f"_layouts/{classname}.html").exists() else "x2datatemplate"
-    )
+    mro = [
+        superclass.__name__.casefold()
+        for superclass in uclass.mro()
+        if issubclass(superclass, x2.X2DataTemplate)
+    ]
+
+    # Determine layout for template class pages
+    for superclass_name in mro:
+        if Path(f"_layouts/{superclass_name.casefold()}.html").exists():
+            layout = superclass_name.casefold()
+            break
+
     with open(Path(f"_wotc/{classname}.html"), "w") as file:
         file.write(
             dedent(
@@ -53,7 +62,7 @@ def recurse_classes(args, x2, uclass):
                 ---
                 title: {classname}
                 flavor: wotc
-                UClass: {classname}
+                UClass: {mro}
                 layout: {layout}
                 permalink: /wotc/{classname}
                 ---
@@ -61,11 +70,10 @@ def recurse_classes(args, x2, uclass):
             )
         )
 
-    layout = (
-        f"{classname}_"
-        if Path(f"_layouts/{classname}_.html").exists()
-        else "x2datatemplate_"
-    )
+    # Determine layout for template instance pages
+    for superclass_name in mro:
+        if Path(f"_layouts/{superclass_name.casefold()}_.html").exists():
+            layout = superclass_name.casefold() + "_"
 
     for dataname, template in uclass.instances.items():
         with open(Path(f"_wotc/") / f"{classname}_{dataname}.html", "w") as file:
@@ -75,7 +83,7 @@ def recurse_classes(args, x2, uclass):
                     ---
                     title: \"{template.guess_title() or dataname}\"
                     flavor: wotc
-                    UClass: {classname}
+                    UClass: {mro}
                     DataName: {dataname}
                     layout: {layout}
                     permalink: /wotc/{classname}/{dataname}

@@ -1,6 +1,6 @@
 {% assign uclass = include.uclass %}
 {% if uclass == nil %}
-  {% assign uclass = page.UClass %}
+  {% assign uclass = page.UClass[0] %}
 {% endif %}
 {%- capture permalink -%}{%- include permalink.html uclass=uclass dataname=template.DataName -%}{%- endcapture -%}
 {% assign target = site[page.flavor] | where: "permalink", permalink | first %}
