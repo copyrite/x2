@@ -4,6 +4,16 @@ layout: default
 <ul>
   {% for item in site.data[page.flavor] %}
     {%- assign uclass = item[0] -%}
-    <li><a href="{%- include url.html uclass=uclass -%}">{{ uclass }}</a></li>
+    {%- capture permalink -%}{%- include permalink.html uclass=uclass dataname=template.DataName -%}{%- endcapture -%}
+    {% assign target = site[page.flavor] | where: "permalink", permalink | first %}
+    <li>
+    {%- if target != nil -%}
+      <a href="{%- include url.html uclass=uclass -%}">
+    {%- endif -%}
+    {{ uclass }}
+    {%- if target != nil -%}
+      </a>
+    {%- endif -%}
+    </li>
   {% endfor %}
 </ul>
