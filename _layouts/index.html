@@ -1,19 +1,4 @@
 ---
 layout: default
 ---
-<ul>
-  {% for item in site.data[page.flavor] %}
-    {%- assign uclass = item[0] -%}
-    {%- capture permalink -%}{%- include permalink.html uclass=uclass dataname=template.DataName -%}{%- endcapture -%}
-    {% assign target = site[page.flavor] | where: "permalink", permalink | first %}
-    <li>
-    {%- if target != nil -%}
-      <a href="{%- include url.html uclass=uclass -%}">
-    {%- endif -%}
-    {{ uclass }}
-    {%- if target != nil -%}
-      </a>
-    {%- endif -%}
-    </li>
-  {% endfor %}
-</ul>
+{%- include index_node.html uclass="x2datatemplate" -%}

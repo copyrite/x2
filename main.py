@@ -16,7 +16,7 @@ import x2py
 CONTENT = Path(os.getenv("XCOM2CONTENTPATH"))
 
 
-class X2DataTemplateJSONEncoder(json.JSONEncoder):
+class X2JSONEncoder(json.JSONEncoder):
     def _transform(self, o):
         if isinstance(o, str):
             return escape(o.replace("<br\\>", "\\n").replace('\\"', '"')).replace(
@@ -56,7 +56,12 @@ def dump(x2: x2py.X2, out: TextIO):
 
         data[class_name.casefold()] = uclass.instances
 
-    json.dump(data, out, cls=X2DataTemplateJSONEncoder)
+    data["class_diagram"] = {
+        parent.casefold(): sorted(child.casefold() for child in children)
+        for parent, children in x2._class_diagram.items()
+    }
+
+    json.dump(data, out, cls=X2JSONEncoder)
 
 
 def guess_title(template):

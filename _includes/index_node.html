@@ -1,0 +1,14 @@
+{%- capture permalink -%}{%- include permalink.html uclass=include.uclass -%}{%- endcapture -%}
+{% assign target = site[page.flavor] | where: "permalink", permalink | first %}
+<ul>
+  <li>
+    {%- if target != nil -%}
+      <a href="{%- include url.html uclass=include.uclass -%}">{{ include.uclass }}</a>
+    {%- else -%}
+      {{ include.uclass }}
+    {%- endif -%}
+    {%- for uclass in site.data[page.flavor].class_diagram[include.uclass] -%}
+      {%- include index_node.html uclass=uclass -%}
+    {%- endfor -%}
+  </li>
+</ul>
