@@ -1,16 +1,62 @@
 import argparse
+import dataclasses
 import glob
 import json
 import os
 import re
-from collections import defaultdict
 from contextlib import suppress
+from copy import deepcopy
+from html import escape
 from pathlib import Path
 from textwrap import dedent
+from typing import TextIO
 
 import x2py
 
 CONTENT = Path(os.getenv("XCOM2CONTENTPATH"))
+
+
+class X2DataTemplateJSONEncoder(json.JSONEncoder):
+    def _transform(self, o):
+        if isinstance(o, str):
+            return escape(o.replace("<br\\>", "\\n").replace('\\"', '"')).replace(
+                "\\n", "<br>"
+            )
+        if isinstance(o, list):
+            return [self._transform(item) for item in o]
+        if dataclasses.is_dataclass(o):
+            for field in dataclasses.fields(o):
+                setattr(
+                    o,
+                    field.name,
+                    self._transform(getattr(o, field.name)),
+                )
+        return o
+
+    def default(self, o):
+        if dataclasses.is_dataclass(o):
+            copy = deepcopy(o)
+            for field in dataclasses.fields(copy):
+                setattr(
+                    copy,
+                    field.name,
+                    self._transform(getattr(copy, field.name)),
+                )
+
+            return dataclasses.asdict(copy)
+        return super().default(o)
+
+
+def dump(x2: x2py.X2, out: TextIO):
+    data = {}
+    for class_name in x2._class_diagram:
+        uclass = getattr(x2, class_name, x2.Object)
+        if not issubclass(uclass, x2.X2DataTemplate):
+            continue
+
+        data[class_name.casefold()] = uclass.instances
+
+    json.dump(data, out, cls=X2DataTemplateJSONEncoder)
 
 
 def guess_title(template):
@@ -102,7 +148,7 @@ if __name__ == "__main__":
     x2 = x2py.X2(CONTENT, CONTENT)
     Path("_data").mkdir(exist_ok=True)
     with open("_data/wotc.json", "w") as file:
-        x2.dump(file, html=True)
+        dump(x2, file)
 
     x2.X2DataTemplate.guess_title = guess_title
 
