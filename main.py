@@ -9,6 +9,7 @@ from copy import deepcopy
 from html import escape
 from pathlib import Path
 from textwrap import dedent
+from typing import Iterable
 from typing import TextIO
 
 import x2py
@@ -47,9 +48,19 @@ class X2JSONEncoder(json.JSONEncoder):
         return super().default(o)
 
 
-def dump(x2: x2py.X2, out: TextIO):
+def dump(x2: x2py.X2, out: TextIO, templates: Iterable[str]):
     data = {}
     for class_name in x2._class_diagram:
+        if args.templates:
+            for arg in args.templates:
+                if arg.casefold() == class_name:
+                    break
+                with suppress(TypeError):
+                    if re.match(rf"x2{arg}template", class_name, re.IGNORECASE):
+                        break
+            else:
+                continue
+
         uclass = getattr(x2, class_name, x2.Object)
         if not issubclass(uclass, x2.X2DataTemplate):
             continue
@@ -59,6 +70,7 @@ def dump(x2: x2py.X2, out: TextIO):
     data["class_diagram"] = {
         parent.casefold(): sorted(child.casefold() for child in children)
         for parent, children in x2._class_diagram.items()
+        if children
     }
 
     json.dump(data, out, cls=X2JSONEncoder)
@@ -153,7 +165,7 @@ if __name__ == "__main__":
     x2 = x2py.X2(CONTENT, CONTENT)
     Path("_data").mkdir(exist_ok=True)
     with open("_data/wotc.json", "w") as file:
-        dump(x2, file)
+        dump(x2, file, args.templates)
 
     x2.X2DataTemplate.guess_title = guess_title
 
