@@ -2,10 +2,24 @@
 layout: default
 ---
 {{ content }}
-<ul>
+<table>
+  <th>
+    <td>Internal Name</td>
+    <td>Template Type</td>
+  </th>
   {% assign uclass = page.UClass[0] %}
   {% for item in site.data[page.flavor][uclass] %}
     {% assign template=item[1] %}
-    <li>{%- include friendly_link.html template=template -%}</li>
+    <tr>
+      <td>
+        {%- include friendly_link.html template=template -%}
+      </td>
+      <td>
+        {{ template.DataName }}
+      </td>
+      <td>
+        {{ uclass }}
+      </td>
+    </tr>
   {% endfor %}
-</ul>
+</table>
