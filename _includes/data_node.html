@@ -2,13 +2,13 @@
   {% assign template=item[1] %}
   <tr>
     <td>
-      {%- include friendly_link.html template=template -%}
+      {%- include friendly_link.html uclass=include.uclass template=template -%}
     </td>
     <td>
-      {{ template.DataName }}
+      <a href="{%- include url.html uclass=include.uclass dataname=template.DataName-%}">{{ template.DataName }}</a>
     </td>
     <td>
-      {{ uclass }}
+      {%- include friendly_link.html uclass=include.uclass -%}
     </td>
   </tr>
 {%- endfor-%}

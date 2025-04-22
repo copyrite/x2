@@ -3,7 +3,7 @@
 <ul>
   <li>
     {%- if target != nil -%}
-      <a href="{%- include url.html uclass=include.uclass -%}">{{ include.uclass }}</a>
+      {%- include friendly_link.html uclass=include.uclass -%}
     {%- else -%}
       {{ include.uclass }}
     {%- endif -%}

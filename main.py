@@ -56,7 +56,7 @@ def dump(x2: x2py.X2, out: TextIO, templates: Iterable[str]):
                 if arg.casefold() == class_name:
                     break
                 with suppress(TypeError):
-                    if re.match(rf"x2{arg}template", class_name, re.IGNORECASE):
+                    if re.match(rf"x2{arg}template", class_name, re.I):
                         break
             else:
                 continue
@@ -101,10 +101,23 @@ def recurse_classes(args, x2, uclass):
             if arg.casefold() == classname:
                 break
             with suppress(TypeError):
-                if re.match(rf"x2{arg}template", classname, re.IGNORECASE):
+                if re.match(rf"x2{arg}template", classname, re.I):
                     break
         else:
             return
+
+    friendly_name = re.sub(
+        "([a-z])([A-Z])", r"\1 \2", uclass.__name__.partition("X2")[2]
+    )
+    friendly_name = re.sub("_DLC_3", "", friendly_name)
+    friendly_name = re.sub("([A-Z]+)([A-Z][a-z])", r"\1 \2", friendly_name)
+    friendly_name = re.sub("_", " ", friendly_name, flags=re.I)
+    friendly_name = re.sub(r" template\b", "", friendly_name, flags=re.I)
+    friendly_name = re.sub(r"\badvent\b", "ADVENT", friendly_name, flags=re.I)
+    friendly_name = re.sub(r"\bgremlin\b", "GREMLIN", friendly_name, flags=re.I)
+    friendly_name = re.sub(r"\bspark\b", "SPARK", friendly_name, flags=re.I)
+    friendly_name = re.sub(r"\bsit rep\b", "Sitrep", friendly_name, flags=re.I)
+    friendly_name = re.sub(r"\bxcom\b", "XCOM", friendly_name, flags=re.I)
 
     mro = [
         superclass.__name__.casefold()
@@ -123,7 +136,7 @@ def recurse_classes(args, x2, uclass):
             dedent(
                 f"""\
                 ---
-                title: {classname}
+                title: {friendly_name}
                 flavor: wotc
                 UClass: {mro}
                 layout: {layout}
