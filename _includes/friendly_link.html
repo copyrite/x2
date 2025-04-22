@@ -1,4 +1,7 @@
 {% assign uclass = include.uclass %}
+{% assign layer0 = nil %}
+{% assign layer1 = nil %}
+{% assign layer2 = nil %}
 {% if uclass == nil %}
   {% assign uclass = page.UClass[0] %}
 {% endif %}
@@ -25,7 +28,7 @@
     {%- elsif uclass == "x2traittemplate" -%}
       {%- capture layer0 -%}{{ include.template.IconImage }}{%- endcapture -%}
     {%- endif -%}
-    {%- if layer0 -%}
+    {%- if include.template and layer0 -%}
       <span class="{{ imgClass }}">
         {%- include value.html value=layer0 imgClass=imgClass imgTitle=target.title -%}
         {%- if layer1 -%}

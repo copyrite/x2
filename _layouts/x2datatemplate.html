@@ -8,18 +8,5 @@ layout: default
     <td>Template Type</td>
   </th>
   {% assign uclass = page.UClass[0] %}
-  {% for item in site.data[page.flavor][uclass] %}
-    {% assign template=item[1] %}
-    <tr>
-      <td>
-        {%- include friendly_link.html template=template -%}
-      </td>
-      <td>
-        {{ template.DataName }}
-      </td>
-      <td>
-        {{ uclass }}
-      </td>
-    </tr>
-  {% endfor %}
+  {%- include data_node.html uclass=uclass -%}
 </table>
