@@ -5,12 +5,12 @@
 {% if uclass == nil %}
   {% assign uclass = page.UClass[0] %}
 {% endif %}
-{%- capture permalink -%}{%- include permalink.html uclass=uclass dataname=template.DataName -%}{%- endcapture -%}
+{%- capture permalink -%}{%- include permalink.html uclass=uclass dataname=include.template.DataName -%}{%- endcapture -%}
 {% assign target = site[page.flavor] | where: "permalink", permalink | first %}
 {%- capture imgClass -%} link icon {{ uclass }}{%- endcapture -%}
 
 <span>
-  <a href="{%- include url.html uclass=uclass dataname=template.DataName -%}"
+  <a href="{%- include url.html uclass=uclass dataname=include.template.DataName -%}"
     {% if include.template %}
       title="{{ include.template.DataName }}"
     {%- endif -%}
